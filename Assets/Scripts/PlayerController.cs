@@ -21,7 +21,7 @@ public class playerController : MonoBehaviour
     public bool MoveUp;
     public bool MoveDown;
 
-    //public int playerDirection;
+    //private Transform playerDirection;
 
     public GameObject faceR;
     public GameObject faceL;
@@ -38,8 +38,17 @@ public class playerController : MonoBehaviour
     public GameObject heart3;
     public float knockbackForce = 3f;
 
-    public LogicScript logic; //gotta rewatch flappy bird shit when spawning
-    
+    public LogicScript logic;
+
+    public int Health;
+    public float Experience = 0f;
+    public float maxExperience = 200f;
+    public int Level = 1;
+    public int levelUPgap = 100;
+
+    public Image xpBarFill; // drag your XPBarFill image here in inspector
+    public playerController player; // reference to your player script
+
     void Start()
     {
         move.action.Enable();
@@ -163,6 +172,8 @@ public class playerController : MonoBehaviour
                 heart3.SetActive(false);
             }
         }
+        // Update fill amount based on player's XP and max XP
+        xpBarFill.fillAmount = Experience / maxExperience;
     }
 
     void FixedUpdate()
@@ -193,6 +204,7 @@ public class playerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        
         if (other.CompareTag("enemy") && !hurting)
         {
             healthCount -= 1;
@@ -214,6 +226,24 @@ public class playerController : MonoBehaviour
             StartCoroutine(HurtAnimation());
             
         }
+    }
+
+
+    public void EXPchange(float plusEXP)
+    {
+        Experience += plusEXP;
+        if (Experience >= maxExperience)
+        {
+            LevelUp();
+        }
+        Debug.Log("exp = " + Experience + ", level = " + Level);
+
+    }
+    private void LevelUp()
+    {
+        Level++;
+        Experience -= maxExperience;
+        maxExperience += levelUPgap;
     }
 
 }

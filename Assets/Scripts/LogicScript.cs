@@ -26,6 +26,7 @@ public class LogicScript : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(0);
         Time.timeScale = 1f;
     }
 

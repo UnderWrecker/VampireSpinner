@@ -18,18 +18,20 @@ public class SwordFunction : MonoBehaviour
     public Rigidbody2D swordRb;
     public float decelerationRate = 300f;
     public float accelerationRate = 100f;
-    public float MaxAceMultiple = 250f;
+    public float MaxAceMultiple = 80f;
     private float currentMotorSpeed; // store current motor speed
 
     public float WeaponDamage = 10f;
+
+    public Enemy Enemy;
 
     private void Start()
     {
         GameObject[] player = GameObject.FindGameObjectsWithTag("Player");
         Collider2D weaponCollider = GetComponent<Collider2D>();
-        foreach (GameObject Player in player)
+        foreach (GameObject a in player)
         {
-            Collider2D playerCollider = Player.GetComponent<Collider2D>();
+            Collider2D playerCollider = a.GetComponent<Collider2D>();
             if (playerCollider != null)
             {
                 Physics2D.IgnoreCollision(weaponCollider, playerCollider);
